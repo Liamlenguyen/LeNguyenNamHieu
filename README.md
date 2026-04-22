@@ -1,59 +1,143 @@
-Sports Hub & Football Field Booking System
-Dự án: Hệ thống thông tin thể thao và nền tảng hỗ trợ đặt sân trực tuyến.
-Tác giả: Nam hieu - FX11106 (Funix)
-1. Giới thiệu dự án (Project Overview)
-Dự án được xây dựng nhằm cung cấp một nền tảng bưu chính điện tử cho những người yêu thích thể thao. Website không chỉ dừng lại ở việc cung cấp kiến thức chuyên sâu về các môn "Thể thao Vua" mà còn được thiết kế để mở rộng thành một hệ thống quản lý và đặt sân bóng đá (Football Field Booking) chuyên nghiệp.
+# Sân Bóng Nam Hiếu — Football Field Booking System
 
-Mục tiêu chính:
+> Nền tảng đặt sân bóng đá / bóng rổ / tennis trực tuyến cho người dùng Việt Nam.
+> Đồ án tốt nghiệp FUNiX của Lê Nguyễn Nam Hiếu (FX11106).
 
-Số hóa thông tin các môn thể thao phổ biến: Bóng đá, Bóng rổ, Tennis.
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white)
+![Tailwind CSS v4](https://img.shields.io/badge/Tailwind%20CSS%20v4-06B6D4?style=flat&logo=tailwindcss&logoColor=white)
+![Vanilla JS](https://img.shields.io/badge/Vanilla%20JS-F7DF1E?style=flat&logo=javascript&logoColor=black)
+![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=flat&logo=supabase&logoColor=white)
+![Vietnamese](https://img.shields.io/badge/Language-Vietnamese-red?style=flat)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 
-Xây dựng giao diện thân thiện, dễ điều hướng cho người dùng cuối.
+---
 
-Chuẩn bị cấu trúc dữ liệu cho tính năng đặt lịch sân bãi.
-2. Tính năng nổi bật (Key Features)
-Dựa trên mã nguồn hiện tại, dự án đã hoàn thiện các tính năng cốt lõi sau:
+## Tính năng
 
-Hệ thống điều hướng đa tầng (Multi-page Navigation): Kết nối mạch lạc từ trang chủ (index.html) đến các trang chi tiết (Details).
+- Danh sách sân theo quận (TP.HCM), lọc giá / sức chứa
+- Đặt sân theo time-slot 90 phút (06:00–23:00), lịch 14 ngày
+- Validation chuẩn VN (SĐT, VND, dd/mm/yyyy, Asia/Bangkok)
+- Chống double-booking ở DB level (partial UNIQUE index)
+- Xác thực email/password (Supabase Auth) + admin panel
+- Thông báo email (dev-mode: console.log + toast) + VietQR thanh toán (mock)
+- Lịch sử đặt sân + hủy sân
+- **Mock mode:** chạy hoàn toàn không cần Supabase — 8 sân mẫu, bookings lưu localStorage
 
-Cấu trúc Semantic HTML: Sử dụng các thẻ chuẩn như <header>, <main>, <footer>, <article>, và <figure> để tối ưu hóa SEO và cấu trúc trang.
+---
 
-Kho dữ liệu thể thao phong phú:
+## Chạy locally (< 10 phút)
 
-Football: Thông tin về FIFA, World Cup và các siêu sao như Messi, Ronaldo.
+### Yêu cầu
 
-Basketball: Lịch sử bộ môn và các huyền thoại Kobe Bryant, Michael Jordan.
+- Node.js ≥ 20
+- npm (đi kèm Node.js)
 
-Tennis: Luật chơi và hệ thống giải Grand Slam (Wimbledon, US Open...).
+### Bước 1 — Clone & install
 
-Quản lý tài nguyên hình ảnh: Tích hợp hình ảnh minh họa cho từng nội dung cụ thể để tăng tính trực quan.
-3. Công nghệ sử dụng (Tech Stack)
-Ngôn ngữ chính: HTML5.
+```bash
+git clone https://github.com/Liamlenguyen/LeNguyenNamHieu.git
+cd LeNguyenNamHieu
+npm install
+```
 
-Cấu trúc: Semantic Web Design.
+### Bước 2 — Build CSS
 
-Công cụ phát triển: VS Code.
+```bash
+npm run build:css
+```
 
-Quản lý phiên bản: GitHub.
-4. Cấu trúc thư mục (Folder Structure)
-Để đảm bảo code chạy đúng, cấu trúc thư mục được sắp xếp như sau:
-├── index.html          # Cổng thông tin chính (Main Portal)
-├── Details-1.html      # Chuyên trang Bóng đá & Booking
-├── Details-2.html      # Chuyên trang Bóng rổ
-├── Details-3.html      # Chuyên trang Tennis
-├── images/             # Lưu trữ toàn bộ hình ảnh dự án (Goldenball, Messi,...)
-└── README.md           # Tài liệu hướng dẫn dự án
-5. Hướng dẫn sử dụng & Cài đặt
-Sao chép mã nguồn: Tải toàn bộ file hoặc sử dụng lệnh git clone.
+Lệnh này tạo ra `public/assets/styles.css` từ Tailwind input.
 
-Kiểm tra hình ảnh: Đảm bảo thư mục images chứa đầy đủ các file ảnh như Goldenball.jpg, Ronaldo.jpg để giao diện hiển thị đúng.
+### Bước 3 — Chạy site
 
-Khởi chạy: Nhấp đúp chuột vào file index.html để mở trang web trên trình duyệt.
-6. Lộ trình phát triển (Future Roadmap)
-Để hoàn thiện hệ thống "Book football field" hoàn chỉnh, các bước tiếp theo bao gồm:
+```bash
+npx serve public
+# hoặc
+npx http-server public -p 3000
+```
 
-Giai đoạn 2: Tích hợp CSS (Sass/Tailwind) để làm đẹp giao diện và hỗ trợ hiển thị trên di động (Responsive).
+Mở trình duyệt tại `http://localhost:3000` (hoặc port được in ra terminal).
 
-Giai đoạn 3: Thêm Form đặt sân bằng JavaScript để ghi nhận thông tin khách hàng và giờ đặt.
+**Mặc định chạy ở mock mode** — có 8 sân mẫu, bookings lưu trong localStorage. Không cần tài khoản Supabase.
 
-Giai đoạn 4: Kết nối Database (Firebase/MySQL) để quản lý lịch trống của sân theo thời gian thực.
+### Bước 4 (tuỳ chọn) — Bật Supabase mode
+
+Xem [docs/supabase-setup.md](./docs/supabase-setup.md) để kết nối database thật (~10 phút).
+
+---
+
+## Cấu trúc thư mục
+
+```
+public/                         # Site root (HTML + assets)
+  index.html                    # Trang chủ
+  about.html                    # Giới thiệu
+  fields.html                   # Danh sách sân
+  field.html                    # Chi tiết & đặt sân
+  confirmation.html             # Xác nhận đặt sân
+  auth.html                     # Đăng nhập / đăng ký
+  admin.html                    # Admin panel
+  my-bookings.html              # Lịch sử đặt sân
+  sports/                       # Trang thông tin thể thao
+  partials/                     # Header / footer dùng chung
+  assets/
+    styles.css                  # Tailwind output (generated — gitignored)
+    images/                     # 14 ảnh placeholder (LoremFlickr CC-BY)
+    js/                         # Toàn bộ client logic
+src/styles/                     # Tailwind input CSS
+supabase/                       # SQL migrations + seed data
+scripts/                        # Build helpers (inject-env.mjs)
+docs/                           # Tài liệu handover & setup
+tests/                          # Thủ tục test thủ công
+```
+
+---
+
+## Scripts
+
+| Lệnh | Mô tả |
+|------|-------|
+| `npm run build:css` | Build Tailwind một lần |
+| `npm run watch:css` | Watch mode cho development |
+| `npm run dev` | Alias của `watch:css` |
+| `npm run dev:env` | Inject `.env.local` vars vào `public/env.js` |
+| `npm run build` | Build đầy đủ: inject env + build CSS |
+
+---
+
+## Tài liệu
+
+| File | Nội dung |
+|------|---------|
+| [docs/handover-guide.md](./docs/handover-guide.md) | **ĐỌC ĐẦU TIÊN** — Tóm tắt bàn giao, mock vs real, upgrade path |
+| [docs/supabase-setup.md](./docs/supabase-setup.md) | Setup Supabase từ đầu |
+| [docs/deployment-guide.md](./docs/deployment-guide.md) | Deploy lên Netlify / Vercel (tuỳ chọn) |
+| [docs/system-architecture.md](./docs/system-architecture.md) | Kiến trúc hệ thống |
+| [docs/code-standards.md](./docs/code-standards.md) | Quy ước code |
+| [docs/codebase-summary.md](./docs/codebase-summary.md) | Mô tả từng file |
+| [docs/credits.md](./docs/credits.md) | Attribution ảnh placeholder |
+| [docs/development-roadmap.md](./docs/development-roadmap.md) | Lộ trình tương lai |
+| [docs/project-changelog.md](./docs/project-changelog.md) | Changelog |
+
+---
+
+## Tính năng dev-mode (giả lập)
+
+| Tính năng | Trạng thái | Cách nâng cấp |
+|-----------|-----------|---------------|
+| Email xác nhận | console.log + toast UI | Thêm Resend API key + Edge Function |
+| VietQR payment | QR mẫu + disclaimer | Thêm TK thật + SePay/VietQR.io verify |
+| Admin role | Set thủ công trên Supabase dashboard | Xem [handover-guide](./docs/handover-guide.md) |
+| Ảnh sân | LoremFlickr CC-BY (placeholder) | Thay bằng ảnh thật có bản quyền |
+
+---
+
+## Tác giả
+
+**Lê Nguyễn Nam Hiếu** — FX11106 — FUNiX (2021–2026)
+
+---
+
+## License
+
+MIT — xem [LICENSE](./LICENSE)
