@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bóng đá — Sân Bóng Nam Hiếu</title>
+  <meta name="description" content="Tìm hiểu về bóng đá — môn thể thao vua. Lịch sử, luật chơi và những huyền thoại như Messi, Ronaldo, Neymar.">
+  <meta property="og:title" content="Bóng đá — Sports Info">
+  <meta property="og:description" content="Môn thể thao vua — được yêu thích nhất thế giới với hơn 250 triệu người chơi.">
+  <meta property="og:image" content="/assets/images/goldenball.jpg">
+  <meta property="og:type" content="article">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="/assets/styles.css">
+  <script src="/env.js"></script>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <div data-partial="header"></div>
+
+  <main class="flex-1">
+
+    <!-- Hero banner -->
+    <section class="relative bg-gradient-to-br from-slate-800 to-pitch-800 text-white py-16 sm:py-20 overflow-hidden">
+      <div
+        class="absolute inset-0 bg-cover bg-center opacity-25"
+        style="background-image: url('/assets/images/goldenball.jpg');"
+        aria-hidden="true"
+      ></div>
+      <div class="relative section-container">
+        <nav class="flex items-center gap-2 text-pitch-200 text-xs mb-6" aria-label="Breadcrumb">
+          <a href="/index.html" class="hover:text-white transition-colors">Trang chủ</a>
+          <span aria-hidden="true">/</span>
+          <span class="text-white font-medium">Bóng đá</span>
+        </nav>
+        <span class="hero-badge mb-4 inline-flex">⚽ Môn thể thao vua</span>
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight">Football</h1>
+        <p class="text-slate-300 text-base mt-3 max-w-lg">Môn thể thao phổ biến nhất thế giới với hơn 250 triệu người chơi tại hơn 200 quốc gia.</p>
+      </div>
+    </section>
+
+    <!-- Article + Sidebar layout -->
+    <div class="section-container py-12 sm:py-16">
+      <div class="flex flex-col lg:flex-row gap-10">
+
+        <!-- Main article content -->
+        <article class="flex-1 min-w-0">
+          <div class="prose prose-slate max-w-3xl text-slate-700 leading-relaxed space-y-5">
+            <p>
+              Football is a sport that everyone can know and its called the king sport. There are two different between the way to call the sport. Association football, more commonly known as simply football or soccer, is a team sport played with a spherical ball between two teams of 11 players. It is played by approximately 250 million players in over 200 countries and dependencies, making it the world's most popular sport.
+            </p>
+            <p>
+              The game is played on a rectangular field called a pitch with a goal at each end. The object of the game is to outscore the opposition by moving the ball beyond the goal line into the opposing goal. The team with the higher number of goals wins the game. Over the world, there are a lot of great player such as Messi, Ronaldo, Neymar, Pogba,...
+            </p>
+          </div>
+
+          <!-- Athlete grid -->
+          <div class="mt-10">
+            <h2 class="text-xl font-bold text-slate-900 mb-6">Những huyền thoại bóng đá</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+
+              <div class="card text-center">
+                <div class="overflow-hidden">
+                  <img
+                    src="/assets/images/the-football-king.jpg"
+                    alt="Lionel Messi"
+                    class="w-full h-48 object-cover object-top group-hover:scale-105 transition-transform duration-300"
+                    loading="lazy"
+                  >
+                </div>
+                <div class="card-body">
+                  <h3 class="font-bold text-slate-900">Lionel Messi</h3>
+                  <span class="inline-block mt-1 text-xs bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full font-medium">Argentina · PSG</span>
+                </div>
+              </div>
+
+              <div class="card text-center">
+                <div class="overflow-hidden">
+                  <img
+                    src="/assets/images/ronaldo.jpg"
+                    alt="Cristiano Ronaldo"
+                    class="w-full h-48 object-cover object-top transition-transform duration-300"
+                    loading="lazy"
+                  >
+                </div>
+                <div class="card-body">
+                  <h3 class="font-bold text-slate-900">Cristiano Ronaldo</h3>
+                  <span class="inline-block mt-1 text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full font-medium">Portugal · Al-Nassr</span>
+                </div>
+              </div>
+
+              <div class="card text-center">
+                <div class="overflow-hidden">
+                  <img
+                    src="/assets/images/neymar.jpg"
+                    alt="Neymar JR"
+                    class="w-full h-48 object-cover object-top transition-transform duration-300"
+                    loading="lazy"
+                  >
+                </div>
+                <div class="card-body">
+                  <h3 class="font-bold text-slate-900">Neymar JR</h3>
+                  <span class="inline-block mt-1 text-xs bg-pitch-100 text-pitch-700 px-2 py-0.5 rounded-full font-medium">Brazil · Al-Hilal</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- More content -->
+          <div class="prose prose-slate max-w-3xl text-slate-700 leading-relaxed space-y-5 mt-10">
+            <h2 class="text-xl font-bold text-slate-900 not-prose">FIFA World Cup</h2>
+            <p>
+              Football is governed internationally by the International Federation of Association Football (FIFA; French: Fédération Internationale de Football Association), which organises World Cups for both men and women every four years. The men's FIFA World Cup has taken place every four years since 1930 with the exception of 1942 and 1946 tournaments, which were cancelled due to World War II.
+            </p>
+            <p>
+              Approximately 190–200 national teams compete in qualifying tournaments within the scope of continental confederations for a place in the finals. The finals tournament, which is held every four years, involves 32 national teams competing over a four-week period. It is the most prestigious men's football tournament in the world as well as the most widely viewed and followed sporting event in the world, exceeding the Olympic Games.
+            </p>
+            <p>
+              The most prestigious competitions in European club football are the UEFA Champions League and UEFA Women's Champions League which attract an extensive television audience throughout the world. The top five European men's leagues are the Premier League (England), La Liga (Spain), Bundesliga (Germany), Serie A (Italy), and Ligue 1 (France).
+            </p>
+          </div>
+        </article>
+
+        <!-- Sidebar: related sports -->
+        <aside class="lg:w-64 shrink-0">
+          <div class="lg:sticky lg:top-24 space-y-4">
+            <h3 class="text-sm font-semibold text-slate-500 uppercase tracking-wider">Môn thể thao khác</h3>
+            <a href="/sports/basketball.html" class="flex items-center gap-3 p-4 bg-slate-50 hover:bg-pitch-50 border border-slate-200 hover:border-pitch-200 rounded-xl transition-all group">
+              <span class="text-2xl" aria-hidden="true">🏀</span>
+              <div>
+                <div class="font-semibold text-slate-900 group-hover:text-pitch-700 text-sm">Bóng rổ</div>
+                <div class="text-xs text-slate-400">Basketball</div>
+              </div>
+              <svg class="w-4 h-4 text-slate-400 ml-auto group-hover:text-pitch-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </a>
+            <a href="/sports/tennis.html" class="flex items-center gap-3 p-4 bg-slate-50 hover:bg-pitch-50 border border-slate-200 hover:border-pitch-200 rounded-xl transition-all group">
+              <span class="text-2xl" aria-hidden="true">🎾</span>
+              <div>
+                <div class="font-semibold text-slate-900 group-hover:text-pitch-700 text-sm">Tennis</div>
+                <div class="text-xs text-slate-400">Tennis</div>
+              </div>
+              <svg class="w-4 h-4 text-slate-400 ml-auto group-hover:text-pitch-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </a>
+            <div class="mt-6 p-4 bg-pitch-600 rounded-xl text-white text-center">
+              <p class="text-sm font-medium mb-3">Muốn đặt sân bóng đá?</p>
+              <a href="/fields.html" class="bg-white text-pitch-700 hover:bg-pitch-50 text-xs font-bold px-4 py-2 rounded-lg inline-block transition-colors">Đặt sân ngay</a>
+            </div>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+
+  </main>
+
+  <div data-partial="footer"></div>
+
+  <script src="/assets/js/layout-loader.js" defer></script>
+</body>
+</html>

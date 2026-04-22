@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tennis — Sân Bóng Nam Hiếu</title>
+  <meta name="description" content="Tìm hiểu về tennis — môn thể thao lịch lãm. Lịch sử, luật chơi và những huyền thoại như Nadal, Federer, Djokovic.">
+  <meta property="og:title" content="Tennis — Sports Info">
+  <meta property="og:description" content="Môn thể thao lịch lãm từ Wimbledon đến Roland Garros.">
+  <meta property="og:image" content="/assets/images/tennis.jpg">
+  <meta property="og:type" content="article">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="/assets/styles.css">
+  <script src="/env.js"></script>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <div data-partial="header"></div>
+
+  <main class="flex-1">
+
+    <!-- Hero banner -->
+    <section class="relative bg-gradient-to-br from-emerald-900 to-emerald-700 text-white py-16 sm:py-20 overflow-hidden">
+      <div
+        class="absolute inset-0 bg-cover bg-center opacity-25"
+        style="background-image: url('/assets/images/tennis.jpg');"
+        aria-hidden="true"
+      ></div>
+      <div class="relative section-container">
+        <nav class="flex items-center gap-2 text-emerald-200 text-xs mb-6" aria-label="Breadcrumb">
+          <a href="/index.html" class="hover:text-white transition-colors">Trang chủ</a>
+          <span aria-hidden="true">/</span>
+          <span class="text-white font-medium">Tennis</span>
+        </nav>
+        <span class="hero-badge mb-4 inline-flex bg-emerald-100 text-emerald-700">🎾 Môn thể thao lịch lãm</span>
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight">Tennis</h1>
+        <p class="text-emerald-100 text-base mt-3 max-w-lg">Môn thể thao vợt có thể chơi đơn hoặc đôi, với lịch sử phong phú từ thế kỷ 19 tại Birmingham, Anh.</p>
+      </div>
+    </section>
+
+    <!-- Article + Sidebar layout -->
+    <div class="section-container py-12 sm:py-16">
+      <div class="flex flex-col lg:flex-row gap-10">
+
+        <!-- Main article content -->
+        <article class="flex-1 min-w-0">
+          <div class="prose prose-slate max-w-3xl text-slate-700 leading-relaxed space-y-5">
+            <p>
+              Tennis is a racket sport that can be played individually against a single opponent (singles) or between two teams of two players each (doubles). Each player uses a tennis racket that is strung with cord to strike a hollow rubber ball covered with felt over or around a net and into the opponent's court. The object of the game is to maneuver the ball in such a way that the opponent is not able to play a valid return.
+            </p>
+            <p>
+              Tennis is an Olympic sport and is played at all levels of society and at all ages. The sport can be played by anyone who can hold a racket, including wheelchair users. The modern game of tennis originated in Birmingham, England, in the late 19th century as lawn tennis. It had close connections both to various field (lawn) games such as croquet and bowls as well as to the older racket sport today called real tennis.
+            </p>
+            <p>
+              The rules of modern tennis have changed little since the 1890s. Two exceptions are that from 1908 to 1961 the server had to keep one foot on the ground at all times, and the adoption of the tiebreak in the 1970s. A recent addition to professional tennis has been the adoption of electronic review technology coupled with a point-challenge system, which allows a player to contest the line call of a point, a system known as Hawk-Eye.
+            </p>
+            <p>
+              Tennis is played by millions of recreational players and is also a popular worldwide spectator sport. The four Grand Slam tournaments (also referred to as the Majors) are especially popular: the Australian Open played on hard courts, the French Open played on red clay courts, Wimbledon played on grass courts, and the US Open also played on hard courts.
+            </p>
+          </div>
+
+          <!-- Athlete grid -->
+          <div class="mt-10">
+            <h2 class="text-xl font-bold text-slate-900 mb-6">Những huyền thoại tennis</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+
+              <div class="card text-center">
+                <div class="overflow-hidden">
+                  <img
+                    src="/assets/images/nadal.jpg"
+                    alt="Rafael Nadal"
+                    class="w-full h-48 object-cover object-top"
+                    loading="lazy"
+                  >
+                </div>
+                <div class="card-body">
+                  <h3 class="font-bold text-slate-900">Rafael Nadal</h3>
+                  <span class="inline-block mt-1 text-xs bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full font-medium">Tây Ban Nha · Clay King</span>
+                </div>
+              </div>
+
+              <div class="card text-center">
+                <div class="overflow-hidden">
+                  <img
+                    src="/assets/images/federer.jpeg"
+                    alt="Roger Federer"
+                    class="w-full h-48 object-cover object-top"
+                    loading="lazy"
+                  >
+                </div>
+                <div class="card-body">
+                  <h3 class="font-bold text-slate-900">Roger Federer</h3>
+                  <span class="inline-block mt-1 text-xs bg-red-100 text-red-700 px-2 py-0.5 rounded-full font-medium">Thụy Sĩ · 20 Grand Slams</span>
+                </div>
+              </div>
+
+              <div class="card text-center">
+                <div class="overflow-hidden">
+                  <img
+                    src="/assets/images/djokovic.jpg"
+                    alt="Novak Djokovic"
+                    class="w-full h-48 object-cover object-top"
+                    loading="lazy"
+                  >
+                </div>
+                <div class="card-body">
+                  <h3 class="font-bold text-slate-900">Novak Djokovic</h3>
+                  <span class="inline-block mt-1 text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full font-medium">Serbia · GOAT</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Grand Slams info -->
+          <div class="mt-10 prose prose-slate max-w-3xl text-slate-700 leading-relaxed">
+            <h2 class="text-xl font-bold text-slate-900 not-prose mb-4">Bốn Grand Slam danh giá</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 not-prose">
+              <div class="p-4 bg-blue-50 border border-blue-100 rounded-xl">
+                <h4 class="font-bold text-blue-800 text-sm">Australian Open</h4>
+                <p class="text-xs text-blue-600 mt-1">Sân cứng · Melbourne · tháng 1</p>
+              </div>
+              <div class="p-4 bg-orange-50 border border-orange-100 rounded-xl">
+                <h4 class="font-bold text-orange-800 text-sm">French Open (Roland Garros)</h4>
+                <p class="text-xs text-orange-600 mt-1">Sân đất đỏ · Paris · tháng 5–6</p>
+              </div>
+              <div class="p-4 bg-emerald-50 border border-emerald-100 rounded-xl">
+                <h4 class="font-bold text-emerald-800 text-sm">Wimbledon</h4>
+                <p class="text-xs text-emerald-600 mt-1">Sân cỏ · London · tháng 6–7</p>
+              </div>
+              <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+                <h4 class="font-bold text-slate-800 text-sm">US Open</h4>
+                <p class="text-xs text-slate-500 mt-1">Sân cứng · New York · tháng 8–9</p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Sidebar: related sports -->
+        <aside class="lg:w-64 shrink-0">
+          <div class="lg:sticky lg:top-24 space-y-4">
+            <h3 class="text-sm font-semibold text-slate-500 uppercase tracking-wider">Môn thể thao khác</h3>
+            <a href="/sports/football.html" class="flex items-center gap-3 p-4 bg-slate-50 hover:bg-pitch-50 border border-slate-200 hover:border-pitch-200 rounded-xl transition-all group">
+              <span class="text-2xl" aria-hidden="true">⚽</span>
+              <div>
+                <div class="font-semibold text-slate-900 group-hover:text-pitch-700 text-sm">Bóng đá</div>
+                <div class="text-xs text-slate-400">Football</div>
+              </div>
+              <svg class="w-4 h-4 text-slate-400 ml-auto group-hover:text-pitch-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </a>
+            <a href="/sports/basketball.html" class="flex items-center gap-3 p-4 bg-slate-50 hover:bg-pitch-50 border border-slate-200 hover:border-pitch-200 rounded-xl transition-all group">
+              <span class="text-2xl" aria-hidden="true">🏀</span>
+              <div>
+                <div class="font-semibold text-slate-900 group-hover:text-pitch-700 text-sm">Bóng rổ</div>
+                <div class="text-xs text-slate-400">Basketball</div>
+              </div>
+              <svg class="w-4 h-4 text-slate-400 ml-auto group-hover:text-pitch-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </a>
+            <div class="mt-6 p-4 bg-pitch-600 rounded-xl text-white text-center">
+              <p class="text-sm font-medium mb-3">Muốn đặt sân thể thao?</p>
+              <a href="/fields.html" class="bg-white text-pitch-700 hover:bg-pitch-50 text-xs font-bold px-4 py-2 rounded-lg inline-block transition-colors">Đặt sân ngay</a>
+            </div>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+
+  </main>
+
+  <div data-partial="footer"></div>
+
+  <script src="/assets/js/layout-loader.js" defer></script>
+</body>
+</html>

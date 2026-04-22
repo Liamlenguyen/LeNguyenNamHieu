@@ -1,0 +1,27 @@
+{
+  "name": "nam-hieu-booking",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Football Field Booking System — Sports Hub (Funix student project by Nam Hieu)",
+  "author": "Le Nguyen Nam Hieu <FX11106 — Funix>",
+  "license": "MIT",
+  "scripts": {
+    "build:css": "tailwindcss -i ./src/styles/input.css -o ./public/assets/styles.css --minify",
+    "watch:css": "tailwindcss -i ./src/styles/input.css -o ./public/assets/styles.css --watch",
+    "dev": "tailwindcss -i ./src/styles/input.css -o ./public/assets/styles.css --watch",
+    "dev:env": "node scripts/inject-env.mjs",
+    "build": "node scripts/inject-env.mjs && npm run build:css",
+    "validate:html": "npx html-validate 'public/**/*.html' || true"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.2.4",
+    "@tailwindcss/forms": "^0.5.11",
+    "@tailwindcss/typography": "^0.5.19",
+    "autoprefixer": "^10.5.0",
+    "postcss": "^8.5.10",
+    "tailwindcss": "^4.2.4"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

@@ -1,0 +1,186 @@
+<!-- Shared Header Partial — loaded via layout-loader.js -->
+<header class="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-slate-100 shadow-sm">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+
+      <!-- Logo -->
+      <a href="/index.html" class="flex items-center gap-2 shrink-0" aria-label="Trang chủ">
+        <div class="w-8 h-8 bg-pitch-600 rounded-lg flex items-center justify-center">
+          <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/>
+            <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M8 8l8 8M16 8l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="font-bold text-slate-900 text-lg leading-tight hidden sm:inline">
+          Sân Bóng<span class="text-pitch-600"> Nam Hiếu</span>
+        </span>
+        <span class="font-bold text-slate-900 text-base leading-tight sm:hidden">SB<span class="text-pitch-600">NH</span></span>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex items-center gap-1" aria-label="Điều hướng chính">
+        <a href="/index.html" class="nav-link">Trang chủ</a>
+
+        <!-- Sports Info dropdown -->
+        <div class="relative group">
+          <button
+            type="button"
+            class="nav-link flex items-center gap-1"
+            aria-haspopup="true"
+            aria-expanded="false"
+            id="sports-menu-btn"
+          >
+            Môn thể thao
+            <svg class="w-4 h-4 transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </button>
+          <!-- Dropdown panel -->
+          <div
+            class="absolute left-0 top-full mt-1 w-44 bg-white rounded-xl shadow-lg border border-slate-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50"
+            role="menu"
+            aria-labelledby="sports-menu-btn"
+          >
+            <div class="py-1">
+              <a href="/sports/football.html" class="flex items-center gap-2 px-4 py-2.5 text-sm text-slate-700 hover:bg-pitch-50 hover:text-pitch-700 transition-colors" role="menuitem">
+                <span>⚽</span> Bóng đá
+              </a>
+              <a href="/sports/basketball.html" class="flex items-center gap-2 px-4 py-2.5 text-sm text-slate-700 hover:bg-pitch-50 hover:text-pitch-700 transition-colors" role="menuitem">
+                <span>🏀</span> Bóng rổ
+              </a>
+              <a href="/sports/tennis.html" class="flex items-center gap-2 px-4 py-2.5 text-sm text-slate-700 hover:bg-pitch-50 hover:text-pitch-700 transition-colors" role="menuitem">
+                <span>🎾</span> Tennis
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <a href="/fields.html" class="nav-link">Danh sách sân</a>
+        <a href="/about.html" class="nav-link">Giới thiệu</a>
+        <!-- Booking history: shown when authenticated (class toggled by header-auth.js) -->
+        <a href="/my-bookings.html" id="nav-my-bookings" class="nav-link hidden">Lịch sử đặt sân</a>
+        <!-- Admin link: shown only when role=admin (class toggled by header-auth.js) -->
+        <a href="/admin.html" id="nav-admin-link" class="nav-link hidden text-pitch-600 font-semibold">Quản trị</a>
+      </nav>
+
+      <!-- Right: CTA + auth + mobile hamburger -->
+      <div class="flex items-center gap-3">
+        <a href="/fields.html" class="hidden sm:inline-flex btn-primary text-xs px-4 py-2">
+          Đặt sân ngay
+        </a>
+        <!-- Auth state chip: injected by header-auth.js after load -->
+        <div id="header-auth-chip" class="hidden sm:flex items-center gap-2"></div>
+        <button
+          type="button"
+          id="nav-hamburger"
+          class="md:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100 transition-colors"
+          aria-label="Mở menu"
+          aria-expanded="false"
+          aria-controls="nav-drawer"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+
+    </div>
+  </div>
+</header>
+
+<!-- Mobile nav drawer (injected inline for simplicity) -->
+<div
+  id="nav-drawer"
+  class="fixed inset-0 z-40 hidden"
+  aria-modal="true"
+  role="dialog"
+  aria-label="Menu điều hướng"
+>
+  <!-- Overlay -->
+  <div id="nav-overlay" class="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
+  <!-- Panel -->
+  <div class="absolute right-0 top-0 h-full w-72 bg-white shadow-xl flex flex-col">
+    <!-- Header -->
+    <div class="flex items-center justify-between px-5 py-4 border-b border-slate-100">
+      <span class="font-bold text-slate-900">Menu</span>
+      <button type="button" id="nav-close" class="p-1.5 rounded-lg text-slate-500 hover:bg-slate-100" aria-label="Đóng menu">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+    <!-- Links -->
+    <nav class="flex-1 overflow-y-auto px-3 py-4 space-y-1">
+      <a href="/index.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-700 hover:bg-pitch-50 hover:text-pitch-700 font-medium transition-colors">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+        Trang chủ
+      </a>
+      <div class="px-4 pt-3 pb-1 text-xs font-semibold text-slate-400 uppercase tracking-wider">Môn thể thao</div>
+      <a href="/sports/football.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-700 hover:bg-pitch-50 hover:text-pitch-700 transition-colors ml-2">
+        <span class="text-base">⚽</span> Bóng đá
+      </a>
+      <a href="/sports/basketball.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-700 hover:bg-pitch-50 hover:text-pitch-700 transition-colors ml-2">
+        <span class="text-base">🏀</span> Bóng rổ
+      </a>
+      <a href="/sports/tennis.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-700 hover:bg-pitch-50 hover:text-pitch-700 transition-colors ml-2">
+        <span class="text-base">🎾</span> Tennis
+      </a>
+      <div class="border-t border-slate-100 my-2"></div>
+      <a href="/fields.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-700 hover:bg-pitch-50 hover:text-pitch-700 font-medium transition-colors">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        Danh sách sân
+      </a>
+      <a href="/about.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-700 hover:bg-pitch-50 hover:text-pitch-700 font-medium transition-colors">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        Giới thiệu
+      </a>
+      <!-- Booking history (mobile) — shown when authenticated -->
+      <a href="/my-bookings.html" id="nav-my-bookings-mobile"
+        class="hidden flex items-center gap-3 px-4 py-3 rounded-lg text-slate-700 hover:bg-pitch-50 hover:text-pitch-700 font-medium transition-colors">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+        Lịch sử đặt sân
+      </a>
+      <!-- Admin link (mobile) — shown when role=admin -->
+      <a href="/admin.html" id="nav-admin-link-mobile"
+        class="hidden flex items-center gap-3 px-4 py-3 rounded-lg text-pitch-700 hover:bg-pitch-50 font-semibold transition-colors">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        Quản trị
+      </a>
+    </nav>
+    <!-- CTA + auth (mobile) -->
+    <div class="px-5 py-4 border-t border-slate-100 space-y-2">
+      <a href="/fields.html" class="btn-primary w-full text-center">Đặt sân ngay</a>
+      <div id="header-auth-chip-mobile" class="text-center"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var btn = document.getElementById('nav-hamburger');
+    var drawer = document.getElementById('nav-drawer');
+    var overlay = document.getElementById('nav-overlay');
+    var closeBtn = document.getElementById('nav-close');
+
+    function openDrawer() {
+      drawer.classList.remove('hidden');
+      document.body.classList.add('overflow-hidden');
+      btn && btn.setAttribute('aria-expanded', 'true');
+    }
+
+    function closeDrawer() {
+      drawer.classList.add('hidden');
+      document.body.classList.remove('overflow-hidden');
+      btn && btn.setAttribute('aria-expanded', 'false');
+    }
+
+    if (btn) btn.addEventListener('click', openDrawer);
+    if (overlay) overlay.addEventListener('click', closeDrawer);
+    if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeDrawer();
+    });
+  })();
+</script>
