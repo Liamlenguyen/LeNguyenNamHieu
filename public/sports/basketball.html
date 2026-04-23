@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bóng rổ — Sân Bóng Nam Hiếu</title>
+  <meta name="description" content="Tìm hiểu về bóng rổ — môn thể thao hoàng tử. Luật chơi, kỹ thuật và những huyền thoại như Kobe Bryant, Michael Jordan, Stephen Curry.">
+  <meta property="og:title" content="Bóng rổ — Sports Info">
+  <meta property="og:description" content="Môn thể thao hoàng tử — đòi hỏi kỹ năng, tốc độ và tinh thần đồng đội.">
+  <meta property="og:image" content="/assets/images/basketball.jpg">
+  <meta property="og:type" content="article">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="/assets/styles.css">
+  <script src="/env.js"></script>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <div data-partial="header"></div>
+
+  <main class="flex-1">
+
+    <!-- Hero banner -->
+    <section class="relative bg-gradient-to-br from-orange-900 to-orange-700 text-white py-16 sm:py-20 overflow-hidden">
+      <div
+        class="absolute inset-0 bg-cover bg-center opacity-25"
+        style="background-image: url('/assets/images/basketball.jpg');"
+        aria-hidden="true"
+      ></div>
+      <div class="relative section-container">
+        <nav class="flex items-center gap-2 text-orange-200 text-xs mb-6" aria-label="Breadcrumb">
+          <a href="/index.html" class="hover:text-white transition-colors">Trang chủ</a>
+          <span aria-hidden="true">/</span>
+          <span class="text-white font-medium">Bóng rổ</span>
+        </nav>
+        <span class="hero-badge mb-4 inline-flex bg-orange-100 text-orange-700">🏀 Môn thể thao hoàng tử</span>
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight">Basketball</h1>
+        <p class="text-orange-100 text-base mt-3 max-w-lg">Môn thể thao đồng đội với hai đội 5 người, tranh tài trên sân hình chữ nhật để ghi điểm qua rổ đối phương.</p>
+      </div>
+    </section>
+
+    <!-- Article + Sidebar layout -->
+    <div class="section-container py-12 sm:py-16">
+      <div class="flex flex-col lg:flex-row gap-10">
+
+        <!-- Main article content -->
+        <article class="flex-1 min-w-0">
+          <div class="prose prose-slate max-w-3xl text-slate-700 leading-relaxed space-y-5">
+            <p>
+              Basketball was considered the prince sport. Basketball is a team sport in which two teams, most commonly of five players each, opposing one another on a rectangular court, compete with the primary objective of shooting a basketball (approximately 9.4 inches (24 cm) in diameter) through the defender's hoop (a basket 18 inches (46 cm) in diameter mounted 10 feet (3.048 m) high to a backboard at each end of the court) while preventing the opposing team from shooting through their own hoop.
+            </p>
+            <p>
+              A field goal is worth two points, unless made from behind the three-point line, when it is worth three. After a foul, timed play stops and the player fouled or designated to shoot a technical foul is given one, two or three one-point free throws. The team with the most points at the end of the game wins, but if regulation play expires with the score tied, an additional period of play (overtime) is mandated.
+            </p>
+            <p>
+              Players advance the ball by bouncing it while walking or running (dribbling) or by passing it to a teammate, both of which require considerable skill. On offense, players may use a variety of shots—the layup, the jump shot, or a dunk; on defense, they may steal the ball from a dribbler, intercept passes, or block shots; either offense or defense may collect a rebound, that is, a missed shot that bounces from rim or backboard.
+            </p>
+            <p>
+              The five players on each side fall into five playing positions. The tallest player is usually the center, the second-tallest and strongest is the power forward, a slightly shorter but more agile player is the small forward, and the shortest players or the best ball handlers are the shooting guard and the point guard, who implements the coach's game plan by managing the execution of offensive and defensive plays. Informally, players may play three-on-three, two-on-two, and one-on-one.
+            </p>
+          </div>
+
+          <!-- Athlete grid -->
+          <div class="mt-10">
+            <h2 class="text-xl font-bold text-slate-900 mb-6">Những huyền thoại bóng rổ</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+
+              <div class="card text-center">
+                <div class="overflow-hidden">
+                  <img
+                    src="/assets/images/kobe-bryant.jpg"
+                    alt="Kobe Bryant"
+                    class="w-full h-48 object-cover object-top"
+                    loading="lazy"
+                  >
+                </div>
+                <div class="card-body">
+                  <h3 class="font-bold text-slate-900">Kobe Bryant</h3>
+                  <span class="inline-block mt-1 text-xs bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full font-medium">LA Lakers · #24</span>
+                </div>
+              </div>
+
+              <div class="card text-center">
+                <div class="overflow-hidden">
+                  <img
+                    src="/assets/images/michael-jordan.jpg"
+                    alt="Michael Jordan"
+                    class="w-full h-48 object-cover object-top"
+                    loading="lazy"
+                  >
+                </div>
+                <div class="card-body">
+                  <h3 class="font-bold text-slate-900">Michael Jordan</h3>
+                  <span class="inline-block mt-1 text-xs bg-red-100 text-red-700 px-2 py-0.5 rounded-full font-medium">Chicago Bulls · #23</span>
+                </div>
+              </div>
+
+              <div class="card text-center">
+                <div class="overflow-hidden">
+                  <img
+                    src="/assets/images/stephen-curry.jpg"
+                    alt="Stephen Curry"
+                    class="w-full h-48 object-cover object-top"
+                    loading="lazy"
+                  >
+                </div>
+                <div class="card-body">
+                  <h3 class="font-bold text-slate-900">Stephen Curry</h3>
+                  <span class="inline-block mt-1 text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full font-medium">Golden State Warriors · #30</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </article>
+
+        <!-- Sidebar: related sports -->
+        <aside class="lg:w-64 shrink-0">
+          <div class="lg:sticky lg:top-24 space-y-4">
+            <h3 class="text-sm font-semibold text-slate-500 uppercase tracking-wider">Môn thể thao khác</h3>
+            <a href="/sports/football.html" class="flex items-center gap-3 p-4 bg-slate-50 hover:bg-pitch-50 border border-slate-200 hover:border-pitch-200 rounded-xl transition-all group">
+              <span class="text-2xl" aria-hidden="true">⚽</span>
+              <div>
+                <div class="font-semibold text-slate-900 group-hover:text-pitch-700 text-sm">Bóng đá</div>
+                <div class="text-xs text-slate-400">Football</div>
+              </div>
+              <svg class="w-4 h-4 text-slate-400 ml-auto group-hover:text-pitch-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </a>
+            <a href="/sports/tennis.html" class="flex items-center gap-3 p-4 bg-slate-50 hover:bg-pitch-50 border border-slate-200 hover:border-pitch-200 rounded-xl transition-all group">
+              <span class="text-2xl" aria-hidden="true">🎾</span>
+              <div>
+                <div class="font-semibold text-slate-900 group-hover:text-pitch-700 text-sm">Tennis</div>
+                <div class="text-xs text-slate-400">Tennis</div>
+              </div>
+              <svg class="w-4 h-4 text-slate-400 ml-auto group-hover:text-pitch-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </a>
+            <div class="mt-6 p-4 bg-pitch-600 rounded-xl text-white text-center">
+              <p class="text-sm font-medium mb-3">Muốn đặt sân thể thao?</p>
+              <a href="/fields.html" class="bg-white text-pitch-700 hover:bg-pitch-50 text-xs font-bold px-4 py-2 rounded-lg inline-block transition-colors">Đặt sân ngay</a>
+            </div>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+
+  </main>
+
+  <div data-partial="footer"></div>
+
+  <script src="/assets/js/layout-loader.js" defer></script>
+</body>
+</html>

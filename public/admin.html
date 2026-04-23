@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quản trị — Sân Bóng Nam Hiếu</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="stylesheet" href="/assets/styles.css">
+  <script src="/env.js"></script>
+  <style>
+    .admin-tab-active   { @apply border-b-2 border-pitch-600 text-pitch-700 font-semibold bg-pitch-50; }
+    .admin-tab-inactive { @apply text-slate-500 hover:text-slate-700 hover:bg-slate-50; }
+    /* Tailwind @apply won't run here — inline fallbacks below */
+    .admin-tab-active   { border-bottom-width: 2px; border-bottom-color: #16a34a; color: #15803d; font-weight: 600; background-color: #f0fdf4; }
+    .admin-tab-inactive { color: #64748b; }
+    .admin-tab-inactive:hover { color: #334155; background-color: #f8fafc; }
+    dialog::backdrop { background: rgba(0,0,0,0.45); backdrop-filter: blur(2px); }
+    dialog { border-radius: 1rem; border: 1px solid #e2e8f0; box-shadow: 0 20px 60px rgba(0,0,0,0.15); padding: 0; max-width: 560px; width: 90vw; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col bg-slate-50">
+
+  <div data-partial="header"></div>
+
+  <main class="flex-1 py-8">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <!-- Access denied (shown when not admin) -->
+      <div id="admin-access-denied" class="hidden text-center py-20">
+        <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <svg class="w-8 h-8 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+          </svg>
+        </div>
+        <h1 class="text-xl font-bold text-slate-800 mb-2">Không có quyền truy cập</h1>
+        <p class="text-slate-500 text-sm mb-6">Trang này chỉ dành cho quản trị viên.</p>
+
+        <!-- Dev-mode toggle (shown only in mock mode via JS) -->
+        <div id="admin-dev-toggle-denied" class="hidden mb-6 p-4 bg-amber-50 border border-amber-200 rounded-xl inline-block text-left">
+          <p class="text-xs text-amber-700 font-semibold mb-2">Chế độ Demo — Bật quyền Admin</p>
+          <button type="button" id="btn-admin-dev-toggle"
+            class="text-xs px-3 py-1.5 rounded-lg bg-pitch-100 text-pitch-700 hover:bg-pitch-200 font-medium transition-colors">
+            Bật chế độ Admin (demo)
+          </button>
+        </div>
+
+        <a href="/index.html" class="btn-primary">Về trang chủ</a>
+      </div>
+
+      <!-- Admin panel (hidden until auth confirmed) -->
+      <div id="admin-panel" class="hidden">
+
+        <!-- Page header -->
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
+          <div>
+            <div class="flex items-center gap-2 mb-1">
+              <span class="text-xl" aria-hidden="true">⚙️</span>
+              <h1 class="text-2xl font-bold text-slate-900">Trang quản trị</h1>
+            </div>
+            <p class="text-sm text-slate-500">
+              Admin:
+              <span id="admin-email-badge" class="font-medium text-pitch-700">—</span>
+            </p>
+          </div>
+          <!-- Dev toggle (visible in mock mode, injected by admin-page.js) -->
+          <div id="admin-dev-toggle" class="hidden">
+            <button type="button" id="btn-admin-dev-toggle"
+              class="text-xs px-3 py-1.5 rounded-lg bg-red-100 text-red-700 hover:bg-red-200 font-medium transition-colors">
+              Tắt chế độ Admin (demo)
+            </button>
+          </div>
+        </div>
+
+        <!-- Tab navigation -->
+        <div class="border-b border-slate-200 mb-6">
+          <nav class="flex gap-1 -mb-px" role="tablist" aria-label="Admin tabs">
+            <button type="button" role="tab"
+              data-tab-btn="fields"
+              aria-selected="true"
+              aria-controls="tab-panel-fields"
+              class="admin-tab-active px-5 py-3 text-sm rounded-t-lg transition-colors">
+              Sân
+            </button>
+            <button type="button" role="tab"
+              data-tab-btn="bookings"
+              aria-selected="false"
+              aria-controls="tab-panel-bookings"
+              class="admin-tab-inactive px-5 py-3 text-sm rounded-t-lg transition-colors">
+              Lịch đặt
+            </button>
+            <button type="button" role="tab"
+              data-tab-btn="users"
+              aria-selected="false"
+              aria-controls="tab-panel-users"
+              class="admin-tab-inactive px-5 py-3 text-sm rounded-t-lg transition-colors">
+              Người dùng
+            </button>
+          </nav>
+        </div>
+
+        <!-- ── Tab: Sân ─────────────────────────────────────────────────── -->
+        <div id="tab-panel-fields" data-tab-panel="fields" role="tabpanel">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-base font-bold text-slate-800">Danh sách sân</h2>
+            <button type="button" id="btn-add-field" class="btn-primary text-sm py-2 px-4">
+              + Thêm sân
+            </button>
+          </div>
+          <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white">
+            <table class="min-w-full text-left">
+              <thead class="bg-slate-50 border-b border-slate-200">
+                <tr>
+                  <th class="px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Tên sân</th>
+                  <th class="px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Quận</th>
+                  <th class="px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Sức chứa</th>
+                  <th class="px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Giá / giờ</th>
+                  <th class="px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Mặt sân</th>
+                  <th class="px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Thao tác</th>
+                </tr>
+              </thead>
+              <tbody id="admin-fields-tbody">
+                <tr>
+                  <td colspan="6" class="px-4 py-6 text-center text-slate-400 text-sm">
+                    <div class="inline-block w-5 h-5 border-2 border-pitch-200 border-t-pitch-600 rounded-full animate-spin"></div>
+                    Đang tải...
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ── Tab: Lịch đặt ────────────────────────────────────────────── -->
+        <div id="tab-panel-bookings" data-tab-panel="bookings" role="tabpanel" class="hidden">
+          <!-- Filter bar -->
+          <div class="flex flex-wrap items-end gap-3 mb-4 p-4 bg-white rounded-xl border border-slate-200">
+            <div class="flex flex-col gap-1">
+              <label for="admin-filter-date-from" class="text-xs font-semibold text-slate-500 uppercase tracking-wide">Từ ngày</label>
+              <input type="date" id="admin-filter-date-from"
+                class="text-sm border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-pitch-500">
+            </div>
+            <div class="flex flex-col gap-1">
+              <label for="admin-filter-date-to" class="text-xs font-semibold text-slate-500 uppercase tracking-wide">Đến ngày</label>
+              <input type="date" id="admin-filter-date-to"
+                class="text-sm border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-pitch-500">
+            </div>
+            <div class="flex flex-col gap-1">
+              <label for="admin-filter-status" class="text-xs font-semibold text-slate-500 uppercase tracking-wide">Trạng thái</label>
+              <select id="admin-filter-status"
+                class="text-sm border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-pitch-500 min-w-[150px]">
+                <option value="">Tất cả</option>
+                <option value="pending">Chờ xác nhận</option>
+                <option value="confirmed">Đã xác nhận</option>
+                <option value="completed">Hoàn thành</option>
+                <option value="cancelled">Đã hủy</option>
+                <option value="no_show">Không đến</option>
+              </select>
+            </div>
+            <button type="button" id="btn-admin-filter-apply" class="btn-primary text-sm py-2 px-4 self-end">
+              Lọc
+            </button>
+          </div>
+
+          <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white">
+            <table class="min-w-full text-left">
+              <thead class="bg-slate-50 border-b border-slate-200">
+                <tr>
+                  <th class="px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Mã</th>
+                  <th class="px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Khách</th>
+                  <th class="px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Sân</th>
+                  <th class="px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Giờ đặt</th>
+                  <th class="px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Tiền</th>
+                  <th class="px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Trạng thái</th>
+                  <th class="px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Thao tác</th>
+                </tr>
+              </thead>
+              <tbody id="admin-bookings-tbody">
+                <tr>
+                  <td colspan="7" class="px-4 py-6 text-center text-slate-400 text-sm">Chọn bộ lọc và nhấn Lọc.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ── Tab: Người dùng ──────────────────────────────────────────── -->
+        <div id="tab-panel-users" data-tab-panel="users" role="tabpanel" class="hidden">
+          <div id="admin-users-content">
+            <div class="text-center py-8 text-slate-400 text-sm">Đang tải...</div>
+          </div>
+        </div>
+
+      </div><!-- /admin-panel -->
+
+    </div>
+  </main>
+
+  <!-- ── Field create/edit dialog ──────────────────────────────────────────── -->
+  <dialog id="admin-field-dialog" aria-labelledby="admin-field-dialog-title">
+    <div class="p-6">
+      <div class="flex items-center justify-between mb-5">
+        <h2 id="admin-field-dialog-title" class="text-lg font-bold text-slate-800">Thêm sân mới</h2>
+        <button type="button" data-dialog-close
+          class="p-1.5 rounded-lg text-slate-400 hover:bg-slate-100 transition-colors"
+          aria-label="Đóng">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+
+      <form id="admin-field-form" class="space-y-4" novalidate>
+        <input type="hidden" name="id">
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="sm:col-span-2">
+            <label for="field-name" class="block text-xs font-semibold text-slate-600 mb-1">Tên sân *</label>
+            <input type="text" id="field-name" name="name" required placeholder="Sân bóng đá Nam Hiếu A"
+              class="w-full text-sm border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-pitch-500">
+          </div>
+          <div class="sm:col-span-2">
+            <label for="field-location" class="block text-xs font-semibold text-slate-600 mb-1">Địa chỉ *</label>
+            <input type="text" id="field-location" name="location" required placeholder="12 Nguyễn Thị Minh Khai, P. Đa Kao"
+              class="w-full text-sm border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-pitch-500">
+          </div>
+          <div>
+            <label for="field-district" class="block text-xs font-semibold text-slate-600 mb-1">Quận / Huyện *</label>
+            <input type="text" id="field-district" name="district" required placeholder="Quận 1"
+              class="w-full text-sm border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-pitch-500">
+          </div>
+          <div>
+            <label for="field-city" class="block text-xs font-semibold text-slate-600 mb-1">Thành phố</label>
+            <input type="text" id="field-city" name="city" value="TP. Hồ Chí Minh"
+              class="w-full text-sm border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-pitch-500">
+          </div>
+          <div>
+            <label for="field-capacity" class="block text-xs font-semibold text-slate-600 mb-1">Sức chứa (người/đội)</label>
+            <select id="field-capacity" name="capacity"
+              class="w-full text-sm border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-pitch-500">
+              <option value="5">5</option>
+              <option value="7">7</option>
+              <option value="11">11</option>
+            </select>
+          </div>
+          <div>
+            <label for="field-price" class="block text-xs font-semibold text-slate-600 mb-1">Giá / giờ (VND)</label>
+            <input type="number" id="field-price" name="price" min="50000" step="10000" value="150000"
+              class="w-full text-sm border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-pitch-500">
+          </div>
+          <div>
+            <label for="field-surface" class="block text-xs font-semibold text-slate-600 mb-1">Mặt sân</label>
+            <select id="field-surface" name="surface"
+              class="w-full text-sm border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-pitch-500">
+              <option>Cỏ nhân tạo</option>
+              <option>Cỏ nhân tạo cao cấp</option>
+              <option>Cỏ tự nhiên</option>
+              <option>Sân xi măng</option>
+            </select>
+          </div>
+          <div>
+            <label for="field-image-url" class="block text-xs font-semibold text-slate-600 mb-1">URL ảnh</label>
+            <input type="text" id="field-image-url" name="image_url" placeholder="/assets/images/san-bong.jpg"
+              class="w-full text-sm border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-pitch-500">
+          </div>
+          <div class="sm:col-span-2">
+            <label for="field-description" class="block text-xs font-semibold text-slate-600 mb-1">Mô tả</label>
+            <textarea id="field-description" name="description" rows="2"
+              class="w-full text-sm border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-pitch-500 resize-none"
+              placeholder="Mô tả ngắn về sân..."></textarea>
+          </div>
+        </div>
+
+        <div class="flex justify-end gap-3 pt-2 border-t border-slate-100">
+          <button type="button" data-dialog-close
+            class="btn-outline text-sm py-2 px-4">Hủy</button>
+          <button type="submit"
+            class="btn-primary text-sm py-2 px-6">Lưu</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <div data-partial="footer"></div>
+
+  <script src="/assets/js/layout-loader.js" defer></script>
+  <script type="module" src="/assets/js/admin-page.js"></script>
+</body>
+</html>

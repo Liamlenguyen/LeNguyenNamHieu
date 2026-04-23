@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lịch sử đặt sân — Sân Bóng Nam Hiếu</title>
+  <meta name="description" content="Xem và quản lý lịch sử đặt sân của bạn. Hủy đặt sân nếu cần.">
+  <link rel="stylesheet" href="/assets/styles.css">
+  <script src="/env.js"></script>
+  <style>
+    .tab-active   { border-bottom: 2px solid #16a34a; color: #15803d; font-weight: 600; }
+    .tab-inactive { color: #64748b; }
+    .tab-inactive:hover { color: #334155; background-color: #f8fafc; }
+    dialog::backdrop { background: rgba(0,0,0,0.45); backdrop-filter: blur(2px); }
+    dialog { border-radius: 1rem; border: 1px solid #e2e8f0; box-shadow: 0 20px 60px rgba(0,0,0,0.15); padding: 0; max-width: 480px; width: 90vw; }
+    @media print {
+      .no-print { display: none !important; }
+      body { background: white; }
+      .card, .card-body { box-shadow: none; border: 1px solid #ccc; }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col bg-slate-50">
+
+  <div data-partial="header" class="no-print"></div>
+
+  <main class="flex-1 py-10 sm:py-14">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <!-- Page header -->
+      <div class="flex items-center justify-between mb-6 no-print">
+        <div>
+          <h1 class="text-2xl font-bold text-slate-900">Lịch sử đặt sân</h1>
+          <p class="text-slate-500 text-sm mt-1">Xem và quản lý tất cả lịch đặt của bạn.</p>
+        </div>
+        <button type="button" onclick="window.print()"
+          class="hidden sm:inline-flex items-center gap-2 text-sm px-4 py-2 rounded-lg border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 transition-colors no-print">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
+          </svg>
+          In hóa đơn
+        </button>
+      </div>
+
+      <!-- Loading state -->
+      <div id="bookings-loading" class="text-center py-20">
+        <div class="w-10 h-10 border-4 border-pitch-200 border-t-pitch-600 rounded-full animate-spin mx-auto mb-4"></div>
+        <p class="text-slate-500 text-sm">Đang tải lịch sử đặt sân...</p>
+      </div>
+
+      <!-- Error state -->
+      <div id="bookings-error" class="hidden text-center py-20">
+        <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <svg class="w-8 h-8 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+          </svg>
+        </div>
+        <h2 class="text-lg font-bold text-slate-800 mb-2">Có lỗi xảy ra</h2>
+        <p class="text-slate-500 text-sm mb-6">Không thể tải lịch sử đặt sân. Vui lòng thử lại.</p>
+        <button onclick="window.location.reload()" class="btn-primary">Tải lại trang</button>
+      </div>
+
+      <!-- Empty state -->
+      <div id="bookings-empty" class="hidden text-center py-20">
+        <div class="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <svg class="w-10 h-10 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+          </svg>
+        </div>
+        <h2 class="text-lg font-bold text-slate-800 mb-2">Chưa có lịch đặt sân</h2>
+        <p class="text-slate-500 text-sm mb-6">Hãy đặt sân đầu tiên của bạn ngay hôm nay!</p>
+        <a href="/fields.html" class="btn-primary">Đặt sân đầu tiên</a>
+      </div>
+
+      <!-- Bookings content -->
+      <div id="bookings-content" class="hidden">
+
+        <!-- Tab navigation -->
+        <div class="border-b border-slate-200 mb-6 no-print">
+          <nav class="flex gap-1 -mb-px" role="tablist" aria-label="Lịch đặt">
+            <button type="button" role="tab"
+              data-tab-btn="upcoming"
+              aria-selected="true"
+              aria-controls="panel-upcoming"
+              class="tab-active relative px-5 py-3 text-sm rounded-t-lg transition-colors">
+              Sắp tới
+              <span id="tab-count-upcoming"
+                class="ml-1.5 inline-flex items-center justify-center w-5 h-5 text-xs rounded-full bg-pitch-600 text-white font-bold"></span>
+            </button>
+            <button type="button" role="tab"
+              data-tab-btn="past"
+              aria-selected="false"
+              aria-controls="panel-past"
+              class="tab-inactive px-5 py-3 text-sm rounded-t-lg transition-colors">
+              Đã qua
+              <span id="tab-count-past"
+                class="ml-1.5 inline-flex items-center justify-center w-5 h-5 text-xs rounded-full bg-slate-300 text-slate-700 font-bold"></span>
+            </button>
+            <button type="button" role="tab"
+              data-tab-btn="cancelled"
+              aria-selected="false"
+              aria-controls="panel-cancelled"
+              class="tab-inactive px-5 py-3 text-sm rounded-t-lg transition-colors">
+              Đã hủy
+              <span id="tab-count-cancelled"
+                class="ml-1.5 inline-flex items-center justify-center w-5 h-5 text-xs rounded-full bg-slate-300 text-slate-700 font-bold"></span>
+            </button>
+          </nav>
+        </div>
+
+        <!-- ── Tab: Sắp tới ──────────────────────────────────────────────── -->
+        <div id="panel-upcoming" data-tab-panel="upcoming" role="tabpanel">
+          <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white">
+            <table class="min-w-full text-left">
+              <thead class="bg-slate-50 border-b border-slate-200 no-print">
+                <tr>
+                  <th class="px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Sân / Mã</th>
+                  <th class="px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Ngày giờ</th>
+                  <th class="px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Tổng tiền</th>
+                  <th class="px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Trạng thái</th>
+                  <th class="px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide no-print">Thao tác</th>
+                </tr>
+              </thead>
+              <tbody id="bookings-upcoming-tbody"></tbody>
+            </table>
+          </div>
+          <p class="text-xs text-slate-400 mt-3 no-print">
+            Hủy miễn phí trước 24 giờ trước giờ đặt sân.
+          </p>
+        </div>
+
+        <!-- ── Tab: Đã qua ───────────────────────────────────────────────── -->
+        <div id="panel-past" data-tab-panel="past" role="tabpanel" class="hidden">
+          <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white">
+            <table class="min-w-full text-left">
+              <thead class="bg-slate-50 border-b border-slate-200">
+                <tr>
+                  <th class="px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Sân / Mã</th>
+                  <th class="px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Ngày giờ</th>
+                  <th class="px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Tổng tiền</th>
+                  <th class="px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Trạng thái</th>
+                  <th class="px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide"></th>
+                </tr>
+              </thead>
+              <tbody id="bookings-past-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ── Tab: Đã hủy ──────────────────────────────────────────────── -->
+        <div id="panel-cancelled" data-tab-panel="cancelled" role="tabpanel" class="hidden">
+          <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white">
+            <table class="min-w-full text-left">
+              <thead class="bg-slate-50 border-b border-slate-200">
+                <tr>
+                  <th class="px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Sân / Mã</th>
+                  <th class="px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Ngày giờ</th>
+                  <th class="px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Tổng tiền</th>
+                  <th class="px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Trạng thái</th>
+                  <th class="px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide"></th>
+                </tr>
+              </thead>
+              <tbody id="bookings-cancelled-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="mt-8 text-center no-print">
+          <a href="/fields.html" class="btn-primary">Đặt thêm sân</a>
+        </div>
+
+      </div><!-- /bookings-content -->
+
+    </div>
+  </main>
+
+  <!-- ── Cancel confirmation dialog ────────────────────────────────────────── -->
+  <dialog id="cancel-dialog" aria-labelledby="cancel-dialog-title" class="no-print">
+    <div class="p-6">
+      <div class="flex items-start gap-3 mb-5">
+        <div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center shrink-0">
+          <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+          </svg>
+        </div>
+        <div>
+          <h2 id="cancel-dialog-title" class="text-base font-bold text-slate-800">Xác nhận hủy đặt sân</h2>
+          <p class="text-slate-500 text-sm mt-1">
+            Bạn chắc chắn muốn hủy lịch đặt này?
+          </p>
+        </div>
+      </div>
+
+      <!-- Booking info -->
+      <div class="bg-slate-50 rounded-xl p-4 mb-5 space-y-2 text-sm">
+        <div class="flex items-center gap-2 text-slate-700">
+          <svg class="w-4 h-4 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+          </svg>
+          <span class="font-medium">Sân:</span>
+          <span id="cancel-field-name">—</span>
+        </div>
+        <div class="flex items-center gap-2 text-slate-700">
+          <svg class="w-4 h-4 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+          <span class="font-medium">Giờ:</span>
+          <span id="cancel-slot-label">—</span>
+        </div>
+      </div>
+
+      <!-- Refund policy -->
+      <div class="flex items-start gap-2 p-3 bg-amber-50 border border-amber-200 rounded-lg text-xs text-amber-800 mb-5">
+        <svg class="w-4 h-4 text-amber-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+        <p>
+          <strong>Chính sách hoàn tiền:</strong> Hủy miễn phí trước 24 giờ.
+          Không hoàn cọc nếu hủy sau thời hạn.
+        </p>
+      </div>
+
+      <input type="hidden" id="cancel-booking-id">
+
+      <div class="flex justify-end gap-3">
+        <button type="button" id="btn-cancel-abort" class="btn-outline text-sm py-2 px-4">
+          Giữ lịch đặt
+        </button>
+        <button type="button" id="btn-cancel-confirm"
+          class="text-sm py-2 px-5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-semibold transition-colors">
+          Xác nhận hủy
+        </button>
+      </div>
+    </div>
+  </dialog>
+
+  <div data-partial="footer" class="no-print"></div>
+
+  <script src="/assets/js/layout-loader.js" defer></script>
+  <script type="module" src="/assets/js/my-bookings-page.js"></script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+# dependencies
+node_modules/
+dist/
+.cache/
+
+# env
+.env
+.env.*
+!.env.example
+
+# generated files
+public/env.js
+public/assets/styles.css
+
+# logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# editor / OS
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo

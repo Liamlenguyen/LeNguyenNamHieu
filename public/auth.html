@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Đăng nhập / Đăng ký — Sân Bóng Nam Hiếu</title>
+  <meta name="description" content="Đăng nhập hoặc đăng ký tài khoản để đặt sân bóng trực tuyến.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="/assets/styles.css">
+  <script src="/env.js"></script>
+</head>
+<body class="min-h-screen flex flex-col bg-slate-50">
+
+  <div data-partial="header"></div>
+
+  <main class="flex-1 flex items-center justify-center py-12 px-4">
+    <div class="w-full max-w-md">
+
+      <!-- Card -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+
+        <!-- Mock-mode banner (shown when Supabase not configured) -->
+        <div id="mock-mode-banner" class="hidden bg-amber-50 border-b border-amber-100 px-6 py-4">
+          <p class="text-sm text-amber-700 font-medium mb-1">Chế độ demo (không cần tài khoản)</p>
+          <p class="text-xs text-amber-600 mb-3">
+            Hệ thống đang chạy bằng dữ liệu mô phỏng. Bạn có thể tiếp tục đặt sân mà không cần đăng nhập.
+          </p>
+          <button
+            id="btn-guest-continue"
+            type="button"
+            class="btn-primary text-sm w-full"
+          >
+            Tiếp tục với tư cách khách
+          </button>
+        </div>
+
+        <!-- Tab header -->
+        <div class="flex border-b border-slate-100" role="tablist" aria-label="Chế độ xác thực">
+          <button
+            id="tab-signin"
+            role="tab"
+            aria-selected="true"
+            aria-controls="panel-signin"
+            class="tab-active flex-1 py-4 text-sm font-semibold transition-colors"
+          >
+            Đăng nhập
+          </button>
+          <button
+            id="tab-signup"
+            role="tab"
+            aria-selected="false"
+            aria-controls="panel-signup"
+            class="flex-1 py-4 text-sm font-semibold text-slate-400 hover:text-slate-600 transition-colors"
+          >
+            Đăng ký
+          </button>
+        </div>
+
+        <!-- Sign-in panel -->
+        <div id="panel-signin" role="tabpanel" aria-labelledby="tab-signin" class="p-6">
+          <h1 class="text-lg font-bold text-slate-900 mb-1">Chào mừng trở lại</h1>
+          <p class="text-sm text-slate-500 mb-6">Đăng nhập để quản lý lịch đặt sân của bạn.</p>
+
+          <!-- Error banner -->
+          <div id="signin-error" class="hidden mb-4 p-3 bg-red-50 border border-red-100 rounded-lg text-sm text-red-600" role="alert"></div>
+
+          <form id="form-signin" novalidate>
+            <div class="space-y-4">
+
+              <div>
+                <label for="signin-email" class="block text-sm font-medium text-slate-700 mb-1">Email</label>
+                <input
+                  type="email"
+                  id="signin-email"
+                  name="email"
+                  autocomplete="email"
+                  required
+                  placeholder="your@email.com"
+                  class="w-full px-3 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-pitch-500 focus:border-transparent"
+                >
+              </div>
+
+              <div>
+                <label for="signin-password" class="block text-sm font-medium text-slate-700 mb-1">Mật khẩu</label>
+                <input
+                  type="password"
+                  id="signin-password"
+                  name="password"
+                  autocomplete="current-password"
+                  required
+                  placeholder="••••••••"
+                  class="w-full px-3 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-pitch-500 focus:border-transparent"
+                >
+              </div>
+
+            </div>
+
+            <button
+              type="submit"
+              id="btn-signin"
+              class="btn-primary w-full mt-6"
+            >
+              Đăng nhập
+            </button>
+          </form>
+        </div>
+
+        <!-- Sign-up panel -->
+        <div id="panel-signup" role="tabpanel" aria-labelledby="tab-signup" class="p-6 hidden">
+          <h1 class="text-lg font-bold text-slate-900 mb-1">Tạo tài khoản mới</h1>
+          <p class="text-sm text-slate-500 mb-6">Đăng ký để đặt sân và xem lịch sử đặt của bạn.</p>
+
+          <!-- Error banner -->
+          <div id="signup-error" class="hidden mb-4 p-3 bg-red-50 border border-red-100 rounded-lg text-sm text-red-600" role="alert"></div>
+
+          <!-- Success banner (shown after successful signup) -->
+          <div id="signup-success" class="hidden p-4 bg-green-50 border border-green-100 rounded-lg">
+            <p class="text-sm font-medium text-green-700 mb-1">Đăng ký thành công!</p>
+            <p class="text-sm text-green-600">
+              Vui lòng kiểm tra email để xác nhận tài khoản (nếu được yêu cầu), sau đó đăng nhập.
+            </p>
+            <button
+              type="button"
+              onclick="document.getElementById('tab-signin').click()"
+              class="mt-3 text-sm font-medium text-pitch-600 hover:text-pitch-700 underline"
+            >
+              Đi đến đăng nhập
+            </button>
+          </div>
+
+          <form id="form-signup" novalidate>
+            <div class="space-y-4">
+
+              <div>
+                <label for="signup-email" class="block text-sm font-medium text-slate-700 mb-1">Email</label>
+                <input
+                  type="email"
+                  id="signup-email"
+                  name="email"
+                  autocomplete="email"
+                  required
+                  placeholder="your@email.com"
+                  class="w-full px-3 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-pitch-500 focus:border-transparent"
+                >
+              </div>
+
+              <div>
+                <label for="signup-password" class="block text-sm font-medium text-slate-700 mb-1">Mật khẩu</label>
+                <input
+                  type="password"
+                  id="signup-password"
+                  name="password"
+                  autocomplete="new-password"
+                  required
+                  placeholder="Tối thiểu 8 ký tự"
+                  class="w-full px-3 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-pitch-500 focus:border-transparent"
+                >
+              </div>
+
+              <div>
+                <label for="signup-confirm" class="block text-sm font-medium text-slate-700 mb-1">Xác nhận mật khẩu</label>
+                <input
+                  type="password"
+                  id="signup-confirm"
+                  name="confirm"
+                  autocomplete="new-password"
+                  required
+                  placeholder="Nhập lại mật khẩu"
+                  class="w-full px-3 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-pitch-500 focus:border-transparent"
+                >
+              </div>
+
+            </div>
+
+            <button
+              type="submit"
+              id="btn-signup"
+              class="btn-primary w-full mt-6"
+            >
+              Tạo tài khoản
+            </button>
+          </form>
+        </div>
+
+      </div>
+
+      <!-- Back link -->
+      <p class="text-center mt-4 text-sm text-slate-500">
+        <a href="/fields.html" class="text-pitch-600 hover:text-pitch-700 font-medium">
+          ← Quay lại danh sách sân
+        </a>
+      </p>
+
+    </div>
+  </main>
+
+  <div data-partial="footer"></div>
+
+  <script src="/assets/js/layout-loader.js" defer></script>
+  <script type="module" src="/assets/js/auth-page.js"></script>
+</body>
+</html>
